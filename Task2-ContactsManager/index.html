@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>Contacts</title>
+		<meta name="description" content="">
+		<meta name="author" content="vkum20">
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+	</head>
+
+	<body>
+		<div>
+			<header>
+				<h1>index</h1>
+			</header>
+			<nav>
+				<p>
+					<a href="/">Home</a>
+				</p>
+				<p>
+					<a href="/contact">Contact</a>
+				</p>
+			</nav>
+
+			<div ng-app="cApp" ng-controller="cController">
+
+				<div>
+
+					<select class="select cCountry" ng-model="selCountry" ng-options="contact.country as contact.country for contact in contacts | filter:selAge | filter:selCity | filter:cQuery | orderBy:'country' | unique:'country'">
+						<option value="">--Select Country--</option>
+					</select>
+
+					<select class="select cCity" ng-model="selCity" ng-options="contact.city as contact.city for contact in contacts | filter:selCountry | filter:selAge | filter:cQuery | orderBy:'city' | unique:'city'">
+						<option value="">--Select City--</option>
+					</select>
+
+					<select class="select cAge" ng-model="selAge" ng-options="contact.age as contact.age for contact in contacts | filter:selCountry | filter:selCity | filter:cQuery | orderBy:'age' | unique:'age'">
+						<option value="">--Select Age--</option>
+					</select>
+					<select class="select cSort" ng-model="selSort" ng-options="cKey as cKey for (cKey, cValue) in contacts[1]">
+						<option value="">--Sort By--</option>
+					</select>
+					<input class="text cQuery" type="text" ng-model="cQuery" />
+					<div class="breadcrumb animate-show" ng-show="selCountry || selCity || selAge || selSort || cQuery">
+
+						<div ng-show="selCountry">
+							{{selCountry}} <span ng-click="selCountry = ''">&#x3A7;</span>
+						</div>
+						<div ng-show="selCity">
+							{{selCity}} <span ng-click="selCity = ''">&#x3A7;</span>
+						</div>
+						<div ng-show="selAge">
+							{{selAge}} <span ng-click="selAge = ''">&#x3A7;</span>
+						</div>
+						<div ng-show="selSort" ng-click="selSort = ''">
+							Sort By : {{selSort}} <span>&#x3A7;</span>
+						</div>
+						<div ng-show="cQuery" ng-click="cQuery = ''">
+							{{cQuery}} <span>&#x3A7;</span>
+						</div>
+
+					</div>
+
+					<div class="datagrid">
+						<table>
+							<thead>
+								<tr>
+									<th ng-repeat="(cKey, cValue) in contacts[1]">{{cKey}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="contact in contacts | filter:{country:selCountry} | filter:{city:selCity} | filter:{age:selAge} | filter:cQuery | orderBy:selSort">
+									<td ng-repeat="(cKey,cValue) in contact">{{cValue}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+
+			<footer>
+				<p>
+					&copy; Copyright  by goldensky
+				</p>
+			</footer>
+		</div>
+		<script type="text/javascript" src="https://code.angularjs.org/1.3.2/angular.min.js"></script>
+		<script type="text/javascript" src="https://code.angularjs.org/1.3.2/angular-animate.min.js"></script>
+		<script type="text/javascript" src="./external/lodash.js"></script>
+		<script type="text/javascript" src="app/app.js"></script>		
+		<script type="text/javascript" src="app/filters/cFilter.js"></script>
+		<script type="text/javascript" src="app/services/cService.js"></script>
+		<script type="text/javascript" src="app/controllers/cController.js"></script>
+	</body>
+</html>
