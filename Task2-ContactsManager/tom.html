@@ -1,0 +1,54 @@
+<html ng-app="app">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+	</head>
+	<body>
+		<section ng-controller="TheCtrl">
+			<div>
+				<label>filter by anything:</label>
+				<input ng-model="search2">
+				<select ng-model="select2" ng-options="item.first_name as item.first_name for item in contacts">
+					<option value="">No filter</option>
+				</select>
+			</div>
+			<div>
+				<label>filter by first_name:</label>
+				<input ng-model="search1.first_name">
+				<select class="problem" ng-model="select1" ng-options="item.first_name for item in contacts">
+					<option value="">No filter</option>
+				</select>
+				<span class="hint">&larr; I cannot reset this filter after using it</span>
+			</div>
+			<hr>
+
+			<div ng-repeat="item in contacts | filter:search1 | filter: search2 | filter:select1 | filter:select2">
+				{{ item.first_name }}: {{ item.country }}
+			</div>
+		</section>
+		<script>
+			var app = angular.module('app', []);
+
+			app.controller('TheCtrl', function TheCtrl($scope,$http) {
+				$http.get("./dependencies/MOCK_DATA.json").then(function(response) {
+					$scope.contacts = response.data;
+				});
+				// $scope.contacts = [{
+					// 'name' : 'Adam',
+					// 'fruit' : 'apple'
+				// }, {
+					// 'name' : 'Shelley',
+					// 'fruit' : 'apple'
+				// }, {
+					// 'name' : 'Barbara',
+					// 'fruit' : 'plum'
+				// }, {
+					// 'name' : 'Steve',
+					// 'fruit' : 'Adam\'s apple'
+				// }, {
+					// 'name' : 'Marty Appleton',
+					// 'fruit' : 'onion'
+				// }];
+			});
+		</script>
+	</body>
+</html>
