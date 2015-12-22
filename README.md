@@ -4,17 +4,21 @@ This repository is strictly for our internal weekly workshops and practice sessi
 In your local clone of your forked repository, you can add the original GitHub repository as a "remote". ("Remotes" are like nicknames for the URLs of repositories - origin is one, for example.) Then you can fetch all the branches from that upstream repository, and rebase your work to continue working on the upstream version. In terms of commands that might look like:
 
 # Add the remote, call it "upstream":
-
+```sh
 git remote add upstream https://github.com/whoever/whatever.git
-
+```
 # Fetch all the branches of that remote into remote-tracking branches,
 # such as upstream/master:
 
+```sh
 git fetch upstream
+```
 
 # Make sure that you're on your master branch:
 
+```sh
 git checkout master
+```
 
 # Rewrite your master branch so that any commits of yours that
 # aren't already in upstream/master are replayed on top of that
