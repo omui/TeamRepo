@@ -22,9 +22,7 @@ git fetch upstream
 git checkout master
 ```
 
-### Rewrite your master branch so that any commits of yours that
-### aren't already in upstream/master are replayed on top of that
-### other branch:
+Rewrite your master branch so that any commits of yours that aren't already in upstream/master are replayed on top of that other branch:
 
 ```sh
 git rebase upstream/master
